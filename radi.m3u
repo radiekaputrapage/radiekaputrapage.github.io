@@ -1,0 +1,21 @@
+#EXTM3U 
+#EXTINF: -1 tvg-name="ANTV" tvg-chno="1" tvg-logo="https://x1.cdn.broiptv.com/img/antv.png" group-title="Indonesia", ANTV
+http://37.49.230.161:8080/kingtveuex/lAEPMRIE4jqjMamv/165072
+#EXTINF: -1 tvg-name="RCTI" tvg-chno="3" tvg-logo="https://x1.cdn.broiptv.com/img/RCTI.png" group-title="Indonesia", RCTI
+http://37.49.230.161:8080/kingtveuex/lAEPMRIE4jqjMamv/157591
+#EXTINF: -1 tvg-name="MNCTV" tvg-chno="2" tvg-logo="https://x1.cdn.broiptv.com/img/mnc_tv.png" group-title="Indonesia", MNCTV
+https://anevia114.mncnow.id/live/eds/MNCTV-HD/sa_dash_vmx/MNCTV-HD.mpd
+#EXTINF: -1 tvg-name="TRANS 7" tvg-chno="4" tvg-logo="https://x1.cdn.broiptv.com/img/trans7.png" group-title="Indonesia", TRANS 7
+http://37.49.230.161:8080/kingtveuex/lAEPMRIE4jqjMamv/162502
+#EXTINF: -1 tvg-logo="https://x1.cdn.broiptv.com/img/sctv.png" group-title="Indonesia", SCTV
+http://edge.linknetott.swiftserve.com/channelgroup3/cg357production/ch395/index.m3u8
+#EXTINF: -1 tvg-name="INDOSIAR" tvg-chno="6" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/INDOSIAR_Logo.png/300px-INDOSIAR_Logo.png" group-title="Indonesia", INDOSIAR
+http://37.49.229.56:8080/googleiptvex/8XsdD8qVstQhcjuy/162138
+#EXTINF: -1 tvg-name="TRANS TV" tvg-chno="7" tvg-logo="https://x1.cdn.broiptv.com/img/transtv.png" group-title="Indonesia", TRANS TV
+https://video.detik.com/transtv/smil:transtv.smil/chunklist_w226470954_b744100_sleng.m3u8
+#EXTINF: -1 tvg-name="TV ONE" tvg-chno="8" tvg-logo="https://x1.cdn.broiptv.com/img/tvone.png" group-title="Indonesia", TV ONE
+http://37.49.230.161:8080/kingtveuex/lAEPMRIE4jqjMamv/296214
+#EXTINF: -1 tvg-chno="9" tvg-logo="https://x1.cdn.broiptv.com/img/gtv.png" group-title="Indonesia", GTV
+https://anevia114.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd
+#EXTINF: -1 tvg-name="NET TV" tvg-chno="10" tvg-logo="https://x1.cdn.broiptv.com/img/net.png" group-title="Indonesia", NET TV
+http://37.49.230.161:8080/kingtveuex/lAEPMRIE4jqjMamv/80292
