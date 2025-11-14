@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manajemen Jaringan - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a3a52 0%, #2c5f8d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .login-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            background: linear-gradient(to right, #1a3a52, #2c5f8d);
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .logo-icon {
+            width: auto;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .login-header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+        
+        .login-header p {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .login-body {
+            padding: 35px 30px;
+        }
+        
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-text h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+        
+        .welcome-text p {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #2c5f8d;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(44, 95, 141, 0.1);
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(to right, #1a3a52, #2c5f8d);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(44, 95, 141, 0.3);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .login-footer {
+            text-align: center;
+            padding: 20px 30px 30px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .login-footer p {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .system-info {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .system-info p {
+            color: white;
+            font-size: 12px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+        
+        .system-info p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .system-info strong {
+            font-weight: 600;
+            opacity: 1;
+        }
+        
+        .alert {
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: none;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 480px) {
+            .login-header {
+                padding: 30px 20px;
+            }
+            
+            .login-header h1 {
+                font-size: 20px;
+            }
+            
+            .login-body {
+                padding: 25px 20px;
+            }
+            
+            .logo-icon {
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="logo-icon">
+                    <img src="/assets/logo.png" alt="TasikLink">
+                </div>
+                <h1>Sistem Manajemen Jaringan</h1>
+                <p>Portal Konfigurasi Gateway Nirkabel</p>
+            </div>
+            
+            <div class="login-body">
+                <div class="welcome-text">
+                    <h2>Login Administrator</h2>
+                    <p>Masukkan kredensial Anda untuk mengakses sistem</p>
+                </div>
+                
+                <div id="error-alert" class="alert alert-error"></div>
+                
+                <form method="POST" action="/cgi-bin/login.sh" onsubmit="return validateForm()">
+                    <div class="form-group">
+                        <label class="form-label">Nama Pengguna</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username"
+                                class="form-input" 
+                                placeholder="Masukkan nama pengguna"
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Kata Sandi</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password"
+                                class="form-input" 
+                                placeholder="Masukkan kata sandi"
+                                required
+                                autocomplete="current-password"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-login">Masuk</button>
+                </form>
+            </div>
+            
+            <div class="login-footer">
+                <p>© 2025 TasikLink. Hak cipta dilindungi.</p>
+            </div>
+        </div>
+        
+        <div class="system-info">
+            <p><strong>Status Sistem:</strong> Online</p>
+            <p><strong>Firmware:</strong> OpenWrt</p>
+            <p id="current-time"></p>
+        </div>
+    </div>
+    
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            
+            const day = days[now.getDay()];
+            const date = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const timeStr = `${day}, ${date} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('current-time').innerHTML = '<strong>Waktu Saat Ini:</strong> ' + timeStr;
+        }
+        
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        function validateForm() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const errorAlert = document.getElementById('error-alert');
+            
+            if (username === '' || password === '') {
+                errorAlert.textContent = 'Silakan masukkan nama pengguna dan kata sandi.';
+                errorAlert.style.display = 'block';
+                return false;
+            }
+            
+            if (username.length < 3) {
+                errorAlert.textContent = 'Nama pengguna harus minimal 3 karakter.';
+                errorAlert.style.display = 'block';
+                return false;
+            }
+            
+            errorAlert.style.display = 'none';
+            return true;
+        }
+        
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') === 'invalid') {
+                const errorAlert = document.getElementById('error-alert');
+                errorAlert.textContent = 'Nama pengguna atau kata sandi salah. Silakan coba lagi.';
+                errorAlert.style.display = 'block';
+            }
+        };
+        
+        document.getElementById('username').addEventListener('input', function() {
+            document.getElementById('error-alert').style.display = 'none';
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('error-alert').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

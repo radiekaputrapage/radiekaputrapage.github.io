@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manajemen Jaringan</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: Arial, Helvetica, sans-serif;
+            background: #e6e6e6;
+            color: #1a1a1a;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        /* Header */
+        .header {
+            background: #2b2b2b;
+            border-bottom: 1px solid #1a1a1a;
+        }
+        
+        .header-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 56px;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+        }
+
+        .logo-icon img {
+            max-width: 28px;
+            max-height: 28px;
+            object-fit: contain;
+        }
+        
+        .logo-text h1 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+        }
+        
+        .logo-text p {
+            font-size: 11px;
+            color: #999999;
+            margin: 0;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .header-time {
+            font-size: 11px;
+            color: #cccccc;
+        }
+        
+        .logout-link {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 6px 14px;
+            border: 1px solid #4d4d4d;
+            background: #3d3d3d;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .logout-link:hover {
+            background: #4d4d4d;
+        }
+        
+        /* Navigation */
+        .nav-tabs {
+            background: #f5f5f5;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .nav-tabs-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            padding: 0 20px;
+        }
+        
+        .nav-tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            font-size: 12px;
+            color: #4d4d4d;
+            background: transparent;
+            font-weight: 500;
+        }
+        
+        .nav-tab.active {
+            color: #1a1a1a;
+            border-bottom-color: #0066cc;
+            background: #ffffff;
+        }
+        
+        .nav-tab:hover {
+            background: #fafafa;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 16px 20px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Status Grid */
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .status-card {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+        }
+        
+        .status-card-header {
+            font-size: 11px;
+            color: #4d4d4d;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e6e6e6;
+            background: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .status-card-body {
+            padding: 0;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-label {
+            font-size: 12px;
+            color: #4d4d4d;
+        }
+        
+        .status-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .status-value.online {
+            color: #008000;
+        }
+        
+        /* Panel */
+        .panel {
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            margin-bottom: 12px;
+        }
+        
+        .panel-header {
+            background: #f5f5f5;
+            padding: 10px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .panel-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .panel-body {
+            padding: 12px;
+        }
+        
+        /* Usage Stats */
+        .usage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            border: 1px solid #cccccc;
+        }
+        
+        @media (max-width: 768px) {
+            .usage-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .usage-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .usage-item {
+            text-align: center;
+            padding: 16px 12px;
+            background: #ffffff;
+            border-right: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
+        }
+        
+        .usage-item:nth-child(4n) {
+            border-right: none;
+        }
+        
+        @media (max-width: 768px) {
+            .usage-item:nth-child(2n) {
+                border-right: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .usage-item {
+                border-right: none;
+            }
+        }
+        
+        .usage-label {
+            font-size: 11px;
+            color: #666666;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .usage-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .usage-unit {
+            font-size: 11px;
+            color: #808080;
+            margin-top: 4px;
+        }
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+        }
+        
+        .data-table thead {
+            background: #f0f0f0;
+        }
+        
+        .data-table th {
+            padding: 10px 8px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1a1a1a;
+            border-bottom: 1px solid #cccccc;
+            border-right: 1px solid #e6e6e6;
+        }
+        
+        .data-table th:last-child {
+            border-right: none;
+        }
+        
+        .data-table td {
+            padding: 10px 8px;
+            font-size: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            border-right: 1px solid #f5f5f5;
+            color: #1a1a1a;
+        }
+        
+        .data-table td:last-child {
+            border-right: none;
+        }
+        
+        .data-table tbody tr:hover {
+            background: #fafafa;
+        }
+        
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #808080;
+            font-size: 12px;
+        }
+        
+        /* Table responsive */
+        @media (max-width: 768px) {
+            .data-table {
+                font-size: 11px;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 8px 6px;
+            }
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #cccccc;
+            background: #ffffff;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid #cccccc;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: Arial, sans-serif;
+        }
+        
+        .btn-primary {
+            background: #0066cc;
+            color: #ffffff;
+            border-color: #0052a3;
+        }
+        
+        .btn-primary:hover {
+            background: #0052a3;
+        }
+        
+        .btn-secondary {
+            background: #666666;
+            color: #ffffff;
+            border-color: #4d4d4d;
+        }
+        
+        .btn-secondary:hover {
+            background: #4d4d4d;
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
+        .btn-icon {
+            padding: 7px 14px;
+            font-size: 11px;
+        }
+        
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            border: 1px solid;
+        }
+        
+        .badge-success {
+            background: #e6f7e6;
+            color: #004d00;
+            border-color: #00b300;
+        }
+        
+        .badge-info {
+            background: #e6f2ff;
+            color: #003d7a;
+            border-color: #0066cc;
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid;
+        }
+        
+        .status-badge.connected {
+            background: #e6f7e6;
+            color: #004d00;
+            border-color: #00b300;
+        }
+        
+        .status-badge.disconnected {
+            background: #ffe6e6;
+            color: #800000;
+            border-color: #cc0000;
+        }
+        
+        .status-badge.not-configured {
+            background: #fff7e6;
+            color: #664400;
+            border-color: #cc9900;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 12px;
+                height: auto;
+                min-height: 56px;
+                flex-wrap: wrap;
+                gap: 8px;
+                padding-top: 8px;
+                padding-bottom: 8px;
+            }
+            
+            .header-time {
+                font-size: 10px;
+            }
+            
+            .logo-text h1 {
+                font-size: 13px;
+            }
+            
+            .logo-text p {
+                font-size: 10px;
+            }
+            
+            .nav-tabs-content {
+                padding: 0 12px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .nav-tab {
+                padding: 10px 16px;
+                white-space: nowrap;
+            }
+            
+            .container {
+                padding: 12px;
+            }
+            
+            .panel-body {
+                padding: 10px;
+            }
+            
+            .status-card-header,
+            .panel-header {
+                padding: 8px 10px;
+            }
+            
+            .status-item {
+                padding: 8px 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-actions {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 6px;
+            }
+            
+            .usage-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <img src="/assets/logo.png" alt="Logo">
+                </div>
+                <div class="logo-text">
+                    <h1>Network Management System</h1>
+                    <p>Wireless Gateway Configuration</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="header-time" id="current-time"></div>
+                <a href="/" class="logout-link">Logout</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav-tabs">
+        <div class="nav-tabs-content">
+            <div class="nav-tab active" onclick="switchTab('status')">Status</div>
+            <div class="nav-tab" onclick="switchTab('wifi')">WLAN Config</div>
+            <div class="nav-tab" onclick="switchTab('clients')">Connected Devices</div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Status Tab -->
+        <div id="status-tab" class="tab-content active">
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-card-header">System Status</div>
+                    <div class="status-card-body">
+                        <div class="status-item">
+                            <span class="status-label">Uptime</span>
+                            <span class="status-value" id="uptime">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">CPU Load</span>
+                            <span class="status-value" id="load">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Memory Usage</span>
+                            <span class="status-value" id="memory">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-card-header">WLAN Status</div>
+                    <div class="status-card-body">
+                        <div class="status-item">
+                            <span class="status-label">SSID</span>
+                            <span class="status-value" id="status-ssid">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Status</span>
+                            <span class="status-value online">Active</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Connected Clients</span>
+                            <span class="status-value" id="status-clients">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="status-card">
+                    <div class="status-card-header">Storage</div>
+                    <div class="status-card-body">
+                        <div class="status-item">
+                            <span class="status-label">Flash Usage</span>
+                            <span class="status-value" id="storage">--</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Firmware Version</span>
+                            <span class="status-value">OpenWrt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WAN Info Panel -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">WAN Connection Information</div>
+                    <button class="btn btn-secondary btn-icon" onclick="loadWanInfo()">Refresh</button>
+                </div>
+                <div class="panel-body">
+                    <div class="status-grid">
+                        <div class="status-card">
+                            <div class="status-card-header">Connection Type</div>
+                            <div class="status-card-body">
+                                <div class="status-item">
+                                    <span class="status-label">Protocol</span>
+                                    <span class="status-value" id="wan-type">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Status</span>
+                                    <span class="status-value" id="wan-status">--</span>
+                                </div>
+                                <div class="status-item" id="wan-uptime-item" style="display: none;">
+                                    <span class="status-label">Connection Time</span>
+                                    <span class="status-value" id="wan-uptime">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-card">
+                            <div class="status-card-header">IP Information</div>
+                            <div class="status-card-body">
+                                <div class="status-item">
+                                    <span class="status-label">IP Address</span>
+                                    <span class="status-value" id="wan-ip">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Gateway</span>
+                                    <span class="status-value" id="wan-gateway">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">DNS Server</span>
+                                    <span class="status-value" id="wan-dns">--</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-card" id="wan-auth-card">
+                            <div class="status-card-header">PPPoE Authentication</div>
+                            <div class="status-card-body">
+                                <div class="status-item">
+                                    <span class="status-label">Username</span>
+                                    <span class="status-value" id="wan-username">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Password</span>
+                                    <span class="status-value" id="wan-password">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Traffic Statistics -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Network Traffic Statistics</div>
+                    <button class="btn btn-secondary btn-icon" onclick="loadTraffic()">Refresh</button>
+                </div>
+                <div class="panel-body" style="padding: 0;">
+                    <div class="usage-stats">
+                        <div class="usage-item">
+                            <div class="usage-label">Total Download</div>
+                            <div class="usage-value" id="rx-total">--</div>
+                            <div class="usage-unit">MB</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="usage-label">Total Upload</div>
+                            <div class="usage-value" id="tx-total">--</div>
+                            <div class="usage-unit">MB</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="usage-label">WiFi Download</div>
+                            <div class="usage-value" id="rx-wifi">--</div>
+                            <div class="usage-unit">MB</div>
+                        </div>
+                        <div class="usage-item">
+                            <div class="usage-label">WiFi Upload</div>
+                            <div class="usage-value" id="tx-wifi">--</div>
+                            <div class="usage-unit">MB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WiFi Configuration Tab -->
+        <div id="wifi-tab" class="tab-content">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Basic WLAN Configuration</div>
+                </div>
+                <div class="panel-body">
+                    <div class="status-grid" style="margin-bottom: 20px;">
+                        <div class="status-card">
+                            <div class="status-card-header">Current Configuration</div>
+                            <div class="status-card-body">
+                                <div class="status-item">
+                                    <span class="status-label">SSID Name</span>
+                                    <span class="status-value" id="current-ssid">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Password</span>
+                                    <span class="status-value" id="current-pass">--</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-label">Encryption</span>
+                                    <span class="status-value">WPA2-PSK</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="/cgi-bin/update_wifi.sh">
+                        <div class="form-group">
+                            <label class="form-label">SSID Name</label>
+                            <input type="text" name="ssid" id="new-ssid" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Pre-Shared Key (Minimum 8 characters)</label>
+                            <input type="password" name="pass" id="new-pass" class="form-input" minlength="8" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block">Apply Configuration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Connected Devices Tab -->
+        <div id="clients-tab" class="tab-content">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">Connected WLAN Stations</div>
+                    <button class="btn btn-secondary btn-icon" onclick="loadDevices()">Refresh</button>
+                </div>
+                <div class="panel-body">
+                    <div id="wifi-clients-table"></div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-title">LAN DHCP Clients</div>
+                </div>
+                <div class="panel-body">
+                    <div id="lan-clients-table"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            
+            const day = days[now.getDay()];
+            const date = now.getDate();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            const timeStr = `${day}, ${date} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+            document.getElementById('current-time').textContent = timeStr;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // Load system info
+        function loadSystemInfo() {
+            fetch('/cgi-bin/get_sysinfo.sh')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('uptime').textContent = data.uptime;
+                    document.getElementById('load').textContent = data.load;
+                    document.getElementById('memory').textContent = data.memory;
+                    document.getElementById('storage').textContent = data.storage;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Load WiFi info
+        function loadWifiInfo() {
+            fetch('/cgi-bin/get_wifi.sh')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status-ssid').textContent = data.ssid;
+                    document.getElementById('current-ssid').textContent = data.ssid;
+                    document.getElementById('current-pass').textContent = data.password;
+                    document.getElementById('new-ssid').value = data.ssid;
+                    document.getElementById('new-pass').value = data.password;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Load traffic statistics
+        function loadTraffic() {
+            fetch('/cgi-bin/get_traffic.sh')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('rx-total').textContent = data.rx_total;
+                    document.getElementById('tx-total').textContent = data.tx_total;
+                    document.getElementById('rx-wifi').textContent = data.rx_wifi;
+                    document.getElementById('tx-wifi').textContent = data.tx_wifi;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Load WAN info
+        function loadWanInfo() {
+            fetch('/cgi-bin/get_wan_info.sh')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('wan-type').textContent = data.wan_type;
+                    
+                    // Set status with badge
+                    let statusHtml = '';
+                    if (data.wan_status === 'connected') {
+                        statusHtml = '<span class="status-badge connected">TERHUBUNG</span>';
+                    } else if (data.wan_status === 'disconnected') {
+                        statusHtml = '<span class="status-badge disconnected">TERPUTUS</span>';
+                    } else if (data.wan_status === 'not_configured') {
+                        statusHtml = '<span class="status-badge not-configured">BELUM DIKONFIGURASI</span>';
+                    } else {
+                        statusHtml = '<span class="status-badge not-configured">UNKNOWN</span>';
+                    }
+                    document.getElementById('wan-status').innerHTML = statusHtml;
+                    
+                    // Set IP information
+                    document.getElementById('wan-ip').textContent = data.wan_ip;
+                    document.getElementById('wan-gateway').textContent = data.wan_gateway;
+                    document.getElementById('wan-dns').textContent = data.wan_dns;
+                    
+                    // Show/hide uptime for PPPoE
+                    if (data.wan_uptime !== 'N/A' && data.wan_uptime !== '') {
+                        document.getElementById('wan-uptime-item').style.display = 'flex';
+                        document.getElementById('wan-uptime').textContent = data.wan_uptime;
+                    } else {
+                        document.getElementById('wan-uptime-item').style.display = 'none';
+                    }
+                    
+                    // Show/hide PPPoE authentication card
+                    if (data.wan_type === 'PPPoE') {
+                        document.getElementById('wan-auth-card').style.display = 'block';
+                        document.getElementById('wan-username').textContent = data.wan_username;
+                        document.getElementById('wan-password').textContent = data.wan_password;
+                    } else {
+                        document.getElementById('wan-auth-card').style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Load devices
+        function loadDevices() {
+            fetch('/cgi-bin/get_clients.sh')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('status-clients').textContent = data.wifi_clients.length;
+                    
+                    // WiFi clients table
+                    let wifiHtml = '<table class="data-table"><thead><tr>' +
+                        '<th>ALAMAT MAC</th><th>KEKUATAN SINYAL</th><th>KECEPATAN RX</th><th>KECEPATAN TX</th><th>WAKTU TERHUBUNG</th>' +
+                        '</tr></thead><tbody>';
+                    
+                    if (data.wifi_clients.length > 0) {
+                        data.wifi_clients.forEach(client => {
+                            wifiHtml += `<tr>
+                                <td><span class="badge badge-info">${client.mac}</span></td>
+                                <td>${client.signal}</td>
+                                <td>${client.rx_rate}</td>
+                                <td>${client.tx_rate}</td>
+                                <td>${client.connected_time}</td>
+                            </tr>`;
+                        });
+                    } else {
+                        wifiHtml += '<tr><td colspan="5" class="empty-state">Tidak ada klien nirkabel yang terhubung</td></tr>';
+                    }
+                    wifiHtml += '</tbody></table>';
+                    document.getElementById('wifi-clients-table').innerHTML = wifiHtml;
+                    
+                    // LAN clients table
+                    let lanHtml = '<table class="data-table"><thead><tr>' +
+                        '<th>NAMA HOST</th><th>ALAMAT IP</th><th>ALAMAT MAC</th><th>WAKTU SEWA</th>' +
+                        '</tr></thead><tbody>';
+                    
+                    if (data.lan_clients.length > 0) {
+                        data.lan_clients.forEach(client => {
+                            lanHtml += `<tr>
+                                <td>${client.hostname}</td>
+                                <td><span class="badge badge-success">${client.ip}</span></td>
+                                <td>${client.mac}</td>
+                                <td>${client.expires}</td>
+                            </tr>`;
+                        });
+                    } else {
+                        lanHtml += '<tr><td colspan="4" class="empty-state">Tidak ada sewa DHCP ditemukan</td></tr>';
+                    }
+                    lanHtml += '</tbody></table>';
+                    document.getElementById('lan-clients-table').innerHTML = lanHtml;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        
+        // Initialize on page load
+        window.onload = function() {
+            loadSystemInfo();
+            loadWifiInfo();
+            loadWanInfo();
+            loadTraffic();
+            loadDevices();
+            
+            // Auto refresh every 30 seconds
+            setInterval(() => {
+                loadSystemInfo();
+                loadWanInfo();
+                loadTraffic();
+                loadDevices();
+            }, 30000);
+        };
+    </script>
+</body>
+</html>
