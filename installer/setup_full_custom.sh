@@ -85,8 +85,12 @@ if [ -f "$UHTTPD_FILE" ]; then
     log "  → Backup ke /etc/config/uhttpd.bak"
 fi
 
+log "  → Hapus uhttpd lama (force)..."
+rm -f "$UHTTPD_FILE"
+
 log "  → Download uhttpd baru..."
-wget -q -O "$UHTTPD_FILE" "$UHTTPD_NEW"
+wget -q --no-cache -O "$UHTTPD_FILE" "$UHTTPD_NEW"
+
 validate_file "$UHTTPD_FILE" 50 || {
     log "  → Restore backup karena file rusak!"
     cp "$UHTTPD_FILE.bak" "$UHTTPD_FILE"
